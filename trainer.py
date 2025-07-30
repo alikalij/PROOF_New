@@ -147,7 +147,11 @@ def _train(args):
 def _set_device(args):
     gpus = []
     for d in args['device']:
-        device = torch.device("cuda:{}".format(d) if d >= 0 else "cpu")
+        #device = torch.device("cuda:{}".format(d) if d >= 0 else "cpu")
+        if d == -1:
+            device = torch.device("cpu")
+        else:
+            device = torch.device("cuda:{}".format(d))
         gpus.append(device)
     args['device'] = gpus
 
