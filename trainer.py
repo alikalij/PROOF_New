@@ -84,7 +84,7 @@ def _train(args):
     # منحنی‌ها
     cnn_curve = {"top1": [], "top5": []}
 
-    for task in range(data_manager.nb_tasks):
+    for task in range(min(data_manager.nb_tasks, 3)):
         logging.info("All params: {}".format(count_parameters(model._network)))
         logging.info("Trainable params: {}".format(count_parameters(model._network, True)))
 
