@@ -192,6 +192,32 @@ class DataManager(object):
         y = self._train_targets
         return np.sum(np.where(y == index))
 
+    from torch.utils.data import DataLoader
+
+    def get_test_loader(self, batch_size=64, num_workers=2):
+        """
+        برمی‌گرداند DataLoader شامل کل داده‌های تست برای استفاده در Unified Evaluation.
+        """
+        # ساخت ترنسفورم مناسب برای تست
+        test_transform = transforms.Compose([*self._test_trsf, *self._common_trsf])
+
+        # ساخت دیتاست تست کامل
+        test_dataset = DummyDataset(
+            images=self._test_data,
+            labels=self._test_targets,
+            trsf=test_transform,
+            use_path=self.use_path
+        )
+
+        # ساخت DataLoader برای دیتاست تست
+        test_loader = DataLoader(
+            dataset=test_dataset,
+            batch_size=batch_size,
+            shuffle=False,
+            num_workers=num_workers
+        )
+        return test_loader
+
 
 class DummyDataset(Dataset):
     def __init__(self, images, labels, trsf, use_path=False):
