@@ -23,11 +23,17 @@ class ModelFusion:
         # نرمال‌سازی وزن‌ها
         total = sum(self.task_weights)
         self.task_weights = [w / total for w in self.task_weights]
+        logging.info("add model fusion self.task_nets: {}".format(self.task_nets))
+        logging.info("add model fusion self.task_weights: {}".format(self.task_weights))
 
     def predict(self, image, text):
         # ترکیب weighted average خروجی logits
         combined = None
+        logging.info("predict model fusion self.task_nets: {}".format(self.task_nets))
+        logging.info("predict model fusion self.task_weights: {}".format(self.task_weights))
         for net, w in zip(self.task_nets, self.task_weights):
+            logging.info("net: {}".format(net))
+            logging.info("w: {}".format(w))
             logits = net(image, text)
             if combined is None:
                 combined = w * logits
