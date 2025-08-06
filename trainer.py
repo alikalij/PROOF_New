@@ -117,7 +117,7 @@ def _train(args):
     total, correct = 0, 0
     # استفاده از loader تست (می‌توانید loader مناسب را از data_manager دریافت کنید)
     test_loader = data_manager.get_test_loader(args["batch_size"])
-    logging.info("test_loader =>", test_loader)
+    logging.info("test_loader => }{}".format(test_loader))
     for images, texts, labels in test_loader:
         images, texts, labels = images.to(args['device'][0]), texts.to(args['device'][0]), labels.to(args['device'][0])
         with torch.no_grad():
